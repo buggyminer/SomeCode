@@ -40,50 +40,30 @@ def dp(table):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    test_table_list = [
+        [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+        ],
+        [
+            [0, 2, 0],
+            [0, 1, 5],
+            [10, 0, 0],
+        ],
+        [
+            [1, 2, 2],
+            [3, 1, 2],
+            [0, 2, 1],
+        ],
+    ]
+    test_result_lsit = [
+        3, 10, 8
+    ]
+    for table, res in zip(test_table_list, test_result_lsit):
+        print(res, dp(table))
+
     table = generate_table(10, 7, 40, 30)
     print(table)
     res = dp(table)
     print(res)
-
-
-class coin_collection_test(unittest.TestCase):
-    # 测试参数是否正确
-    def test_generate_coin(self):
-        n, m, p, v = 10, 7, 40, 30
-        table = generate_table(n, m, p, v)
-        self.assertEqual(len(table), n)
-        self.assertEqual(len(table[0]), m)
-        count = 0
-        for row in table:
-            for col in row:
-                self.assertLessEqual(col, v)
-                if (col != 0):
-                    count = count + 1
-        print(count)
-        self.assertEqual(count, p)
-
-    # 手工编写测试用例
-    def test_dp_right(self):
-        # table = generate_table(10, 7, 40, 30)
-        test_table_list=[
-            [
-                [1,0,0],
-                [0,1,0],
-                [0,0,1],
-            ],
-            [
-                [0, 2, 0],
-                [0, 1, 5],
-                [10, 0, 0],
-            ],
-            [
-                [1, 2, 2],
-                [3, 1, 2],
-                [0, 2, 1],
-            ],
-        ]
-        test_result_lsit=[
-            3,10,8
-        ]
-        for table,res in zip(test_table_list,test_result_lsit):
-            self.assertEqual(res,dp(table))

@@ -22,7 +22,7 @@ def color_decode(color):
 
 def plot_graph(vector, colors=None):
     if (colors == None):
-        colors = [0 for i in range(len(vector))]
+        colors = [1 for i in range(len(vector))]
     edges = []
     G = nx.Graph()
     for row, i in zip(vector, range(len(vector))):
@@ -76,22 +76,11 @@ def graph_coloring_recall(vector, color_num):
         if 0 not in visit:
             return colors
         for i in range(len(vector[node_now])):
-            if vector[node_now][i] == 1 and visit[i] == 0:
+            if vector[node_now][i] == 1 and visit[i] == 0 and i not in stack:
                 stack.append(i)
 
 
-# if __name__ == '__main__':
-#     vector = [
-#         [0, 1, 1, 0, 1],
-#         [1, 0, 0, 1, 0],
-#         [1, 0, 0, 1, 0],
-#         [0, 1, 1, 0, 0],
-#         [1, 0, 0, 0, 0],
-#     ]
-#     plot_graph(vector, [1, 2, 3, 2, 1])
-
-
-class grapg_coloring_test(unittest.TestCase):
+if __name__ == '__main__':
     test_graph_list = [
         {
             "vector":
@@ -126,44 +115,11 @@ class grapg_coloring_test(unittest.TestCase):
         }
     ]
 
-    @staticmethod
-    def __coloring_result_test(vector, colors):
-        for row, color in zip(vector, colors):
-            if not check_if_color_satisfied(row, colors, color):
-                return False
-        return True
-
-    def test_graph_coloring_greddy(self):
-        for graph in self.test_graph_list:
-            vector = graph["vector"]
-            color_num = graph["color_num"]
-            colors = graph_coloring_greedy(vector, color_num)
-            if colors:
-                if not self.__coloring_result_test(vector, colors):
-                    self.assertTrue(False)
-                plot_graph(vector, colors)
-        self.assertTrue(True)
-
-    def test_graph_coloring_recall(self):
-        for graph in self.test_graph_list:
-            vector = graph["vector"]
-            color_num = graph["color_num"]
-            colors = graph_coloring_recall(vector, color_num)
-            if colors:
-                if not self.__coloring_result_test(vector, colors):
-                    self.assertTrue(False)
-                plot_graph(vector, colors)
-        self.assertTrue(True)
-
-    def test_compare_coloring_speed(self):
-        self.assertTrue(True)
-
-    def test_plot_vector(self):
-        vector = self.test_graph_list[1]["vector"]
+    for graph in test_graph_list:
+        vector = graph["vector"]
         plot_graph(vector)
-        self.assertTrue(True)
+        color_num = graph["color_num"]
+        colors = graph_coloring_recall(vector, color_num)
+        if colors:
+            plot_graph(vector, colors)
 
-    def test_plot_vector_with_color(self):
-        vector = self.test_graph_list[1]["vector"]
-        plot_graph(vector, [1, 2, 3, 1, 2])
-        self.assertTrue(True)
