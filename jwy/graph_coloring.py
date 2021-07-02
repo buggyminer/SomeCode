@@ -36,7 +36,7 @@ def plot_graph(vector, colors=None):
     plt.show()
 
 
-# 只能得到近似解,甚至得不到可行解
+# 可能找不到可行解
 def graph_coloring_greedy(vector, color_num):
     colors = [0 for i in range(len(vector[0]))]
     for i in range(len(vector[0])):
@@ -53,7 +53,7 @@ def graph_coloring_greedy(vector, color_num):
     return colors
 
 
-# 回溯法寻找最优解
+# 回溯法
 def graph_coloring_recall(vector, color_num):
     stack = []
     visit = [0 for i in range(len(vector))]
@@ -123,3 +123,20 @@ if __name__ == '__main__':
         if colors:
             plot_graph(vector, colors)
 
+    time1=time.time()
+    for i in range(1000):
+        for graph in test_graph_list:
+            vector = graph["vector"]
+            color_num = graph["color_num"]
+            colors = graph_coloring_recall(vector, color_num)
+    time1=time.time()-time1
+    print("time of recall is ",time1)
+
+    time2=time.time()
+    for i in range(1000):
+        for graph in test_graph_list:
+            vector = graph["vector"]
+            color_num = graph["color_num"]
+            colors = graph_coloring_greedy(vector, color_num)
+    time2=time.time()-time2
+    print("time of recall is ",time2)
